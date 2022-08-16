@@ -1,6 +1,6 @@
 package dev.conner.entities;
 
-public class user {
+public class User {
 
     enum UserType {CONSTITUENT, COUNCIL}
 
@@ -8,10 +8,10 @@ public class user {
     private String username;
     private UserType userType;
 
-    public user() {
+    public User() {
     }
 
-    public user(int id, String username, UserType userType) {
+    public User(int id, String username, UserType userType) {
         this.id = id;
         this.username = username;
         this.userType = userType;

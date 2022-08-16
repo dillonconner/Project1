@@ -2,7 +2,7 @@ package dev.conner.entities;
 
 import java.util.Objects;
 
-public class complaint {
+public class Complaint {
 
     enum ComplaintType {A, B, C, D} //add actual things
     enum ComplaintPriority {UNREVIEWED, HIGH, LOW, IGNORED}
@@ -14,8 +14,8 @@ public class complaint {
     private long date;
     private int meetingId;
 
-    public complaint() {}
-    public complaint(int id, ComplaintType cType, String description, ComplaintPriority cPriority, long date, int meetingId) {
+    public Complaint() {}
+    public Complaint(int id, ComplaintType cType, String description, ComplaintPriority cPriority, long date, int meetingId) {
         this.id = id;
         this.cType = cType;
         this.description = description;
@@ -76,7 +76,7 @@ public class complaint {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        complaint complaint = (complaint) o;
+        Complaint complaint = (Complaint) o;
         return id == complaint.id;
     }
 

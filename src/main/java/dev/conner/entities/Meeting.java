@@ -2,13 +2,13 @@ package dev.conner.entities;
 
 import java.util.Objects;
 
-public class meeting {
+public class Meeting {
 
     private int id;
     private long date;
     private String address;
 
-    public meeting() {}
+    public Meeting() {}
 
     public int getId() {
         return id;
@@ -38,7 +38,7 @@ public class meeting {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        meeting meeting = (meeting) o;
+        Meeting meeting = (Meeting) o;
         return id == meeting.id;
     }
 
