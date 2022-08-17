@@ -4,8 +4,8 @@ import java.util.Objects;
 
 public class Complaint {
 
-    enum ComplaintType {A, B, C, D} //add actual things
-    enum ComplaintPriority {UNREVIEWED, HIGH, LOW, IGNORED}
+    public enum ComplaintType {A, B, C, D} //add actual things
+    public enum ComplaintPriority {UNREVIEWED, HIGH, LOW, IGNORED}
 
     private int id;
     private ComplaintType cType;
