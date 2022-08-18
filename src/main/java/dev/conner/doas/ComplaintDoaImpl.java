@@ -24,8 +24,8 @@ public class ComplaintDoaImpl implements ComplaintDOA{
             rs.next();
             int key = rs.getInt("id");
             complaint.setId(key);
-            key = rs.getInt("meetingId");
-            complaint.setMeetingId(key);
+            //key = rs.getInt("meetingId");
+            //complaint.setMeetingId(key);
 
             return complaint;
         }catch(SQLException e){

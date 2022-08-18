@@ -9,6 +9,8 @@ public class ComplaintServiceImpl implements ComplaintService{
 
     private ComplaintDOA complaintDOA;
 
+    public ComplaintServiceImpl(ComplaintDOA complaintDOA) {this.complaintDOA = complaintDOA;}
+
     @Override
     public Complaint createComplaint(Complaint complaint) {
         if(complaint.getDescription().length() == 0){
