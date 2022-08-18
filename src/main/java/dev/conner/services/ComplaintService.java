@@ -8,7 +8,7 @@ public interface ComplaintService {
 
     Complaint createComplaint(Complaint complaint);
 
-    Complaint updateComplaint(Complaint complaint);
+    boolean updateComplaintPriority(int id, Complaint.ComplaintPriority priority);
 
     Set<Complaint> getAllComplaints();
 }

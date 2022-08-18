@@ -19,13 +19,12 @@ public class ComplaintServiceImpl implements ComplaintService{
 
         complaint.setcPriority(Complaint.ComplaintPriority.UNREVIEWED); //complaint start unreviewed
         complaint.setDate(System.currentTimeMillis() / 1000L);  // set time of complaint submission
-        //complaint.setMeetingId(-1); // dont need this; defaults in sql
         return this.complaintDOA.createComplaint(complaint);
     }
 
     @Override
-    public Complaint updateComplaint(Complaint complaint) {
-        return null;
+    public boolean updateComplaintPriority(int id, Complaint.ComplaintPriority priority) {
+        return this.complaintDOA.updateComplaintPriority(id, priority);
     }
 
     @Override

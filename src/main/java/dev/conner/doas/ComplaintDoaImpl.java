@@ -35,8 +35,21 @@ public class ComplaintDoaImpl implements ComplaintDOA{
     }
 
     @Override
-    public Complaint updateComplaint(Complaint complaint) {
-        return null;
+    public boolean updateComplaintPriority(int id, Complaint.ComplaintPriority priority) {
+        try(Connection conn = ConnectionUtil.createConnection()){
+            String sql = "update complaint set priority = ? where id = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, priority.toString());
+            ps.setInt(2, id);
+
+            int updateCount = ps.executeUpdate();
+            if(updateCount > 0) return true; //check if something was updated
+            else return false;
+
+        }catch(SQLException e){
+            e.printStackTrace();
+            return false;
+        }
     }
 
     @Override

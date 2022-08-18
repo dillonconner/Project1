@@ -25,5 +25,53 @@ public class ComplaintController {
         }
     };
 
+    public Handler setPriorityHigh = (ctx) -> {
+        int id = Integer.parseInt(ctx.pathParam("complaintId"));
+        boolean res = this.complaintService.updateComplaintPriority(id, Complaint.ComplaintPriority.HIGH);
+        if(res){
+            ctx.status(200);
+            ctx.result("Expense Approved");
+        }else{
+            ctx.status(404);
+            ctx.result("Expense with Id: " + Integer.toString(id) + " not found");
+        }
+    };
+
+    public Handler setPriorityLow = (ctx) -> {
+        int id = Integer.parseInt(ctx.pathParam("complaintId"));
+        boolean res = this.complaintService.updateComplaintPriority(id, Complaint.ComplaintPriority.LOW);
+        if(res){
+            ctx.status(200);
+            ctx.result("Expense Approved");
+        }else{
+            ctx.status(404);
+            ctx.result("Expense with Id: " + Integer.toString(id) + " not found");
+        }
+    };
+
+    public Handler setPriorityIgnored = (ctx) -> {
+        int id = Integer.parseInt(ctx.pathParam("complaintId"));
+        boolean res = this.complaintService.updateComplaintPriority(id, Complaint.ComplaintPriority.IGNORED);
+        if(res){
+            ctx.status(200);
+            ctx.result("Expense Approved");
+        }else{
+            ctx.status(404);
+            ctx.result("Expense with Id: " + Integer.toString(id) + " not found");
+        }
+    };
+
+    public Handler setPriorityAddressed = (ctx) -> {
+        int id = Integer.parseInt(ctx.pathParam("complaintId"));
+        boolean res = this.complaintService.updateComplaintPriority(id, Complaint.ComplaintPriority.ADDRESSED);
+        if(res){
+            ctx.status(200);
+            ctx.result("Expense Approved");
+        }else{
+            ctx.status(404);
+            ctx.result("Expense with Id: " + Integer.toString(id) + " not found");
+        }
+    };
+
 
 }
