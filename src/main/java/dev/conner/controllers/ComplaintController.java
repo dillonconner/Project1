@@ -5,6 +5,8 @@ import dev.conner.entities.Complaint;
 import dev.conner.services.ComplaintService;
 import io.javalin.http.Handler;
 
+import java.util.Set;
+
 public class ComplaintController {
 
     private Gson gson = new Gson();
@@ -71,6 +73,34 @@ public class ComplaintController {
             ctx.status(404);
             ctx.result("Expense with Id: " + Integer.toString(id) + " not found");
         }
+    };
+
+    public Handler getComplaintById = (ctx) -> {
+        int id = Integer.parseInt(ctx.pathParam("complaintId"));
+        Complaint c = this.complaintService.getComplaintById(id);
+        if(c == null){
+            ctx.status(404);
+            ctx.result("Complaint with Id: " + Integer.toString(id) + " not found");
+        }else{
+            String json = this.gson.toJson(c);
+            ctx.status(200);
+            ctx.result(json);
+        }
+    };
+
+    public Handler getAllComplaints = (ctx) -> {
+        Set<Complaint> complaints = this.complaintService.getAllComplaints();
+        String json = this.gson.toJson(complaints);
+        ctx.status(200);
+        ctx.result(json);
+    };
+
+    public Handler getAllComplaintsByPriority = (ctx) -> {
+        Complaint.ComplaintPriority priority = Complaint.ComplaintPriority.valueOf(ctx.pathParam("priority"));
+        Set<Complaint> complaints = this.complaintService.getAllComplaintsByPriority(priority);
+        String json = this.gson.toJson(complaints);
+        ctx.status(200);
+        ctx.result(json);
     };
 
 

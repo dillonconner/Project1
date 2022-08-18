@@ -10,6 +10,10 @@ public interface ComplaintDOA {
 
     boolean updateComplaintPriority(int id, Complaint.ComplaintPriority priority);
 
+    Complaint getComplaintById(int id);
+
     Set<Complaint> getAllComplaints();
+
+    Set<Complaint> getAllComplaintsByPriority(Complaint.ComplaintPriority priority);
 
 }

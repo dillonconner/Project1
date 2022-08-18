@@ -28,7 +28,17 @@ public class ComplaintServiceImpl implements ComplaintService{
     }
 
     @Override
+    public Complaint getComplaintById(int id) {
+        return this.complaintDOA.getComplaintById(id);
+    }
+
+    @Override
     public Set<Complaint> getAllComplaints() {
-        return null;
+        return this.complaintDOA.getAllComplaints();
+    }
+
+    @Override
+    public Set<Complaint> getAllComplaintsByPriority(Complaint.ComplaintPriority priority) {
+        return this.complaintDOA.getAllComplaintsByPriority(priority);
     }
 }

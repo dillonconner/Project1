@@ -4,6 +4,7 @@ import dev.conner.entities.Complaint;
 import dev.conner.utils.ConnectionUtil;
 
 import java.sql.*;
+import java.util.HashSet;
 import java.util.Set;
 
 public class ComplaintDoaImpl implements ComplaintDOA{
@@ -53,7 +54,85 @@ public class ComplaintDoaImpl implements ComplaintDOA{
     }
 
     @Override
+    public Complaint getComplaintById(int id) {
+        try(Connection conn = ConnectionUtil.createConnection()){
+            String sql = "select * from complaint where id = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1,id);
+            ResultSet rs = ps.executeQuery();
+
+            rs.next();
+
+            Complaint c = new Complaint();
+            c.setId(rs.getInt("id"));
+            c.setcType(Complaint.ComplaintType.valueOf(rs.getString("complaint_type")));
+            c.setDescription(rs.getString("description"));
+            c.setcPriority(Complaint.ComplaintPriority.valueOf(rs.getString("priority")));
+            c.setDate(rs.getLong("report_date"));
+            c.setMeetingId(rs.getInt("meetingId"));
+
+            return c;
+
+        }catch(SQLException e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
     public Set<Complaint> getAllComplaints() {
-        return null;
+        try(Connection conn = ConnectionUtil.createConnection()){
+            String sql = "select * from complaint order by priority";
+            PreparedStatement ps = conn.prepareStatement(sql);
+
+            ResultSet rs = ps.executeQuery();
+
+            Set<Complaint> complaints = new HashSet<>();
+            while(rs.next()){
+                Complaint c = new Complaint();
+                c.setId(rs.getInt("id"));
+                c.setcType(Complaint.ComplaintType.valueOf(rs.getString("complaint_type")));
+                c.setDescription(rs.getString("description"));
+                c.setcPriority(Complaint.ComplaintPriority.valueOf(rs.getString("priority")));
+                c.setDate(rs.getLong("report_date"));
+                c.setMeetingId(rs.getInt("meetingId"));
+
+                complaints.add(c);
+            }
+            return complaints;
+
+        }catch(SQLException e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public Set<Complaint> getAllComplaintsByPriority(Complaint.ComplaintPriority priority) {
+        try(Connection conn = ConnectionUtil.createConnection()){
+            String sql = "select * from complaint where priority = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1,priority.toString());
+
+            ResultSet rs = ps.executeQuery();
+
+            Set<Complaint> complaints = new HashSet<>();
+            while(rs.next()){
+                Complaint c = new Complaint();
+                c.setId(rs.getInt("id"));
+                c.setcType(Complaint.ComplaintType.valueOf(rs.getString("complaint_type")));
+                c.setDescription(rs.getString("description"));
+                c.setcPriority(Complaint.ComplaintPriority.valueOf(rs.getString("priority")));
+                c.setDate(rs.getLong("report_date"));
+                c.setMeetingId(rs.getInt("meetingId"));
+
+                complaints.add(c);
+            }
+            return complaints;
+
+        }catch(SQLException e){
+            e.printStackTrace();
+            return null;
+        }
     }
 }

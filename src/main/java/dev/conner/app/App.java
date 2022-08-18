@@ -26,6 +26,14 @@ public class App {
         app.patch("/complaints/{complaintId}/setIgnored", cC.setPriorityIgnored);
         app.patch("/complaints/{complaintId}/setAddressed", cC.setPriorityAddressed);
 
+        app.get("/complaints/{complaintId}", cC.getComplaintById);
+        //get all complaints sorted
+        app.get("/complaints", cC.getAllComplaints);
+        //get all complaints by query
+        app.get("/complaints/{priority}", cC.getAllComplaintsByPriority);
+
+
+
         app.start();
     }
 }
