@@ -9,9 +9,10 @@ import org.junit.jupiter.api.*;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Set;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class DoaTest {
+public class ComplaintDoaTests {
 
     static ComplaintDOA complaintDOA = new ComplaintDOAImpl();
 
@@ -54,6 +55,49 @@ public class DoaTest {
         Complaint savedC = complaintDOA.createComplaint(c);
         Assertions.assertNotEquals(0, savedC.getId());
         Assertions.assertNotEquals(0, savedC.getMeetingId());
+    }
+
+    @Test
+    @Order(2)
+    void get_complaint_test(){
+        Complaint savedC = complaintDOA.getComplaintById(1);
+        Assertions.assertEquals(1, savedC.getId());
+        Assertions.assertEquals("test", savedC.getDescription());
+    }
+
+    @Test
+    @Order(3)
+    void update_complaint_priority_test(){
+        boolean ret = complaintDOA.updateComplaintPriority(1, Complaint.ComplaintPriority.HIGH);
+        Complaint c = complaintDOA.getComplaintById(1);
+        Assertions.assertEquals(true, ret);
+        Assertions.assertEquals(Complaint.ComplaintPriority.HIGH, c.getcPriority());
+    }
+
+    @Test
+    @Order(4)
+    void get_all_complaints_test(){
+        Complaint c = new Complaint(0, Complaint.ComplaintType.A, "test", Complaint.ComplaintPriority.HIGH, 5, 0);
+        Complaint c1 = new Complaint(0, Complaint.ComplaintType.A, "test", Complaint.ComplaintPriority.LOW, 5, 0);
+        Complaint c2 = new Complaint(0, Complaint.ComplaintType.A, "test", Complaint.ComplaintPriority.LOW, 5, 0);
+        Complaint c3 = new Complaint(0, Complaint.ComplaintType.A, "test", Complaint.ComplaintPriority.UNREVIEWED, 5, 0);
+        complaintDOA.createComplaint(c);
+        complaintDOA.createComplaint(c1);
+        complaintDOA.createComplaint(c2);
+        complaintDOA.createComplaint(c3);
+
+        Set<Complaint> complaintSet = complaintDOA.getAllComplaints();
+
+        Assertions.assertEquals(5, complaintSet.size());
+    }
+
+    @Test
+    @Order(5)
+    void get_all_by_priority_test(){
+        Set<Complaint> complaintSet = complaintDOA.getAllComplaintsByPriority(Complaint.ComplaintPriority.HIGH);
+        Assertions.assertEquals(2,complaintSet.size());
+        complaintSet = complaintDOA.getAllComplaintsByPriority(Complaint.ComplaintPriority.LOW);
+        Assertions.assertEquals(2,complaintSet.size());
     }
 
 

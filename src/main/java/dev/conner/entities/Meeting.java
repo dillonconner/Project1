@@ -10,6 +10,12 @@ public class Meeting {
 
     public Meeting() {}
 
+    public Meeting(int id, long date, String address) {
+        this.id = id;
+        this.date = date;
+        this.address = address;
+    }
+
     public int getId() {
         return id;
     }
