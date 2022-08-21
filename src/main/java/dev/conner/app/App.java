@@ -1,10 +1,15 @@
 package dev.conner.app;
 
 import dev.conner.controllers.ComplaintController;
+import dev.conner.controllers.MeetingController;
 import dev.conner.doas.ComplaintDOA;
-import dev.conner.doas.ComplaintDoaImpl;
+import dev.conner.doas.ComplaintDOAImpl;
+import dev.conner.doas.MeetingDOA;
+import dev.conner.doas.MeetingDOAImpl;
 import dev.conner.services.ComplaintService;
 import dev.conner.services.ComplaintServiceImpl;
+import dev.conner.services.MeetingService;
+import dev.conner.services.MeetingServiceImpl;
 import io.javalin.Javalin;
 
 public class App {
@@ -15,10 +20,15 @@ public class App {
             config.enableCorsForAllOrigins();
         });
 
-        ComplaintDOA cD = new ComplaintDoaImpl();
+        ComplaintDOA cD = new ComplaintDOAImpl();
         ComplaintService cS = new ComplaintServiceImpl(cD);
         ComplaintController cC = new ComplaintController(cS);
 
+        MeetingDOA mD = new MeetingDOAImpl();
+        MeetingService mS = new MeetingServiceImpl(mD);
+        MeetingController mC = new MeetingController(mS);
+
+        /////////////////          COMPLAINTS       ////////////////////////////
         app.post("/complaints", cC.createComplaint);
         //set priority for complaints
         app.patch("/complaints/{complaintId}/setHigh", cC.setPriorityHigh);
@@ -31,6 +41,13 @@ public class App {
         app.get("/complaints", cC.getAllComplaints);
         //get all complaints by query
         app.get("/complaints/{priority}", cC.getAllComplaintsByPriority);
+
+        /////////////////          MEETINGS       ////////////////////////////
+        app.post("/meetings", mC.createMeeting);
+        app.get("/meetings", mC.getAllMeetings);
+        app.put("/meetings/{meetingId}", mC.updateMeeting);
+
+        /////////////////          USERS       ////////////////////////////
 
 
 

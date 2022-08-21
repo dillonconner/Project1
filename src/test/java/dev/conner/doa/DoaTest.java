@@ -1,7 +1,7 @@
 package dev.conner.doa;
 
 import dev.conner.doas.ComplaintDOA;
-import dev.conner.doas.ComplaintDoaImpl;
+import dev.conner.doas.ComplaintDOAImpl;
 import dev.conner.entities.Complaint;
 import dev.conner.utils.ConnectionUtil;
 import org.junit.jupiter.api.*;
@@ -13,7 +13,7 @@ import java.sql.Statement;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class DoaTest {
 
-    static ComplaintDOA complaintDOA = new ComplaintDoaImpl();
+    static ComplaintDOA complaintDOA = new ComplaintDOAImpl();
 
     @BeforeAll
     static void setup(){
