@@ -28,6 +28,11 @@ public class ComplaintServiceImpl implements ComplaintService{
     }
 
     @Override
+    public boolean updateComplaintMeeting(int id, int meetingId) {
+        return this.complaintDAO.updateComplaintMeeting(id, meetingId);
+    }
+
+    @Override
     public Complaint getComplaintById(int id) {
         return this.complaintDAO.getComplaintById(id);
     }

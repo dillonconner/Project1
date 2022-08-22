@@ -54,6 +54,24 @@ public class ComplaintDAOImpl implements ComplaintDAO {
     }
 
     @Override
+    public boolean updateComplaintMeeting(int id, int meetingId) {
+        try(Connection conn = ConnectionUtil.createConnection()){
+            String sql = "update complaint set meetingId = ? where id = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, meetingId);
+            ps.setInt(2, id);
+
+            int updateCount = ps.executeUpdate();
+            if(updateCount > 0) return true; //check if something was updated
+            else return false;
+
+        }catch(SQLException e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
     public Complaint getComplaintById(int id) {
         try(Connection conn = ConnectionUtil.createConnection()){
             String sql = "select * from complaint where id = ?";

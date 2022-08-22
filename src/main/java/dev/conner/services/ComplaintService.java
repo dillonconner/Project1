@@ -10,6 +10,8 @@ public interface ComplaintService {
 
     boolean updateComplaintPriority(int id, Complaint.ComplaintPriority priority);
 
+    boolean updateComplaintMeeting(int id, int meetingId);
+
     Complaint getComplaintById(int id);
 
     Set<Complaint> getAllComplaints();

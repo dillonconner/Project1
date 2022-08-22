@@ -35,6 +35,8 @@ public class App {
         app.patch("/complaints/{complaintId}/setLow", cC.setPriorityLow);
         app.patch("/complaints/{complaintId}/setIgnored", cC.setPriorityIgnored);
         app.patch("/complaints/{complaintId}/setAddressed", cC.setPriorityAddressed);
+        //set meeting for complaints
+        app.patch("/complaints/{complaintId}/setMeeting/{meetingId}", cC.setMeeting);
 
         app.get("/complaints/{complaintId}", cC.getComplaintById);
         //get all complaints sorted

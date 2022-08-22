@@ -75,6 +75,19 @@ public class ComplaintController {
         }
     };
 
+    public Handler setMeeting = (ctx) -> {
+        int id = Integer.parseInt(ctx.pathParam("complaintId"));
+        int meetingId = Integer.parseInt(ctx.pathParam("meetingId"));
+        boolean res = this.complaintService.updateComplaintMeeting(id, meetingId);
+        if(res){
+            ctx.status(200);
+            ctx.result("Expense Approved");
+        }else{
+            ctx.status(404);
+            ctx.result("Expense with Id: " + Integer.toString(id) + " not found");
+        }
+    };
+
     public Handler getComplaintById = (ctx) -> {
         int id = Integer.parseInt(ctx.pathParam("complaintId"));
         Complaint c = this.complaintService.getComplaintById(id);
