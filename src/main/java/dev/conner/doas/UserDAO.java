@@ -4,7 +4,7 @@ import dev.conner.entities.User;
 
 import java.util.Set;
 
-public interface UserDOA {
+public interface UserDAO {
 
     User createUser(User user);
     Set<User> getAllUsers();

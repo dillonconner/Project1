@@ -4,7 +4,7 @@ import dev.conner.entities.Complaint;
 
 import java.util.Set;
 
-public interface ComplaintDOA {
+public interface ComplaintDAO {
 
     Complaint createComplaint(Complaint complaint);
 

@@ -1,15 +1,15 @@
 package dev.conner.services;
 
-import dev.conner.doas.ComplaintDOA;
+import dev.conner.doas.ComplaintDAO;
 import dev.conner.entities.Complaint;
 
 import java.util.Set;
 
 public class ComplaintServiceImpl implements ComplaintService{
 
-    private ComplaintDOA complaintDOA;
+    private ComplaintDAO complaintDAO;
 
-    public ComplaintServiceImpl(ComplaintDOA complaintDOA) {this.complaintDOA = complaintDOA;}
+    public ComplaintServiceImpl(ComplaintDAO complaintDAO) {this.complaintDAO = complaintDAO;}
 
     @Override
     public Complaint createComplaint(Complaint complaint) {
@@ -19,26 +19,26 @@ public class ComplaintServiceImpl implements ComplaintService{
 
         complaint.setcPriority(Complaint.ComplaintPriority.UNREVIEWED); //complaint start unreviewed
         complaint.setDate(System.currentTimeMillis() / 1000L);  // set time of complaint submission
-        return this.complaintDOA.createComplaint(complaint);
+        return this.complaintDAO.createComplaint(complaint);
     }
 
     @Override
     public boolean updateComplaintPriority(int id, Complaint.ComplaintPriority priority) {
-        return this.complaintDOA.updateComplaintPriority(id, priority);
+        return this.complaintDAO.updateComplaintPriority(id, priority);
     }
 
     @Override
     public Complaint getComplaintById(int id) {
-        return this.complaintDOA.getComplaintById(id);
+        return this.complaintDAO.getComplaintById(id);
     }
 
     @Override
     public Set<Complaint> getAllComplaints() {
-        return this.complaintDOA.getAllComplaints();
+        return this.complaintDAO.getAllComplaints();
     }
 
     @Override
     public Set<Complaint> getAllComplaintsByPriority(Complaint.ComplaintPriority priority) {
-        return this.complaintDOA.getAllComplaintsByPriority(priority);
+        return this.complaintDAO.getAllComplaintsByPriority(priority);
     }
 }

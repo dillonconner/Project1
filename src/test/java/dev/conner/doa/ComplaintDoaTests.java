@@ -1,7 +1,7 @@
 package dev.conner.doa;
 
-import dev.conner.doas.ComplaintDOA;
-import dev.conner.doas.ComplaintDOAImpl;
+import dev.conner.doas.ComplaintDAO;
+import dev.conner.doas.ComplaintDAOImpl;
 import dev.conner.entities.Complaint;
 import dev.conner.utils.ConnectionUtil;
 import org.junit.jupiter.api.*;
@@ -14,7 +14,7 @@ import java.util.Set;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class ComplaintDoaTests {
 
-    static ComplaintDOA complaintDOA = new ComplaintDOAImpl();
+    static ComplaintDAO complaintDAO = new ComplaintDAOImpl();
 
     @BeforeAll
     static void setup(){
@@ -52,7 +52,7 @@ public class ComplaintDoaTests {
     @Order(1)
     void create_complaint_test(){
         Complaint c = new Complaint(0, Complaint.ComplaintType.A, "test", Complaint.ComplaintPriority.UNREVIEWED, 5, 0);
-        Complaint savedC = complaintDOA.createComplaint(c);
+        Complaint savedC = complaintDAO.createComplaint(c);
         Assertions.assertNotEquals(0, savedC.getId());
         Assertions.assertNotEquals(0, savedC.getMeetingId());
     }
@@ -60,7 +60,7 @@ public class ComplaintDoaTests {
     @Test
     @Order(2)
     void get_complaint_test(){
-        Complaint savedC = complaintDOA.getComplaintById(1);
+        Complaint savedC = complaintDAO.getComplaintById(1);
         Assertions.assertEquals(1, savedC.getId());
         Assertions.assertEquals("test", savedC.getDescription());
     }
@@ -68,8 +68,8 @@ public class ComplaintDoaTests {
     @Test
     @Order(3)
     void update_complaint_priority_test(){
-        boolean ret = complaintDOA.updateComplaintPriority(1, Complaint.ComplaintPriority.HIGH);
-        Complaint c = complaintDOA.getComplaintById(1);
+        boolean ret = complaintDAO.updateComplaintPriority(1, Complaint.ComplaintPriority.HIGH);
+        Complaint c = complaintDAO.getComplaintById(1);
         Assertions.assertEquals(true, ret);
         Assertions.assertEquals(Complaint.ComplaintPriority.HIGH, c.getcPriority());
     }
@@ -81,12 +81,12 @@ public class ComplaintDoaTests {
         Complaint c1 = new Complaint(0, Complaint.ComplaintType.A, "test", Complaint.ComplaintPriority.LOW, 5, 0);
         Complaint c2 = new Complaint(0, Complaint.ComplaintType.A, "test", Complaint.ComplaintPriority.LOW, 5, 0);
         Complaint c3 = new Complaint(0, Complaint.ComplaintType.A, "test", Complaint.ComplaintPriority.UNREVIEWED, 5, 0);
-        complaintDOA.createComplaint(c);
-        complaintDOA.createComplaint(c1);
-        complaintDOA.createComplaint(c2);
-        complaintDOA.createComplaint(c3);
+        complaintDAO.createComplaint(c);
+        complaintDAO.createComplaint(c1);
+        complaintDAO.createComplaint(c2);
+        complaintDAO.createComplaint(c3);
 
-        Set<Complaint> complaintSet = complaintDOA.getAllComplaints();
+        Set<Complaint> complaintSet = complaintDAO.getAllComplaints();
 
         Assertions.assertEquals(5, complaintSet.size());
     }
@@ -94,9 +94,9 @@ public class ComplaintDoaTests {
     @Test
     @Order(5)
     void get_all_by_priority_test(){
-        Set<Complaint> complaintSet = complaintDOA.getAllComplaintsByPriority(Complaint.ComplaintPriority.HIGH);
+        Set<Complaint> complaintSet = complaintDAO.getAllComplaintsByPriority(Complaint.ComplaintPriority.HIGH);
         Assertions.assertEquals(2,complaintSet.size());
-        complaintSet = complaintDOA.getAllComplaintsByPriority(Complaint.ComplaintPriority.LOW);
+        complaintSet = complaintDAO.getAllComplaintsByPriority(Complaint.ComplaintPriority.LOW);
         Assertions.assertEquals(2,complaintSet.size());
     }
 

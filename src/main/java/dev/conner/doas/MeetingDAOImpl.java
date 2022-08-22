@@ -7,7 +7,7 @@ import java.sql.*;
 import java.util.HashSet;
 import java.util.Set;
 
-public class MeetingDOAImpl implements MeetingDOA{
+public class MeetingDAOImpl implements MeetingDAO {
     @Override
     public Meeting createMeeting(Meeting meeting) {
         try(Connection conn = ConnectionUtil.createConnection()){

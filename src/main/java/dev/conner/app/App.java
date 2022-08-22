@@ -2,10 +2,10 @@ package dev.conner.app;
 
 import dev.conner.controllers.ComplaintController;
 import dev.conner.controllers.MeetingController;
-import dev.conner.doas.ComplaintDOA;
-import dev.conner.doas.ComplaintDOAImpl;
-import dev.conner.doas.MeetingDOA;
-import dev.conner.doas.MeetingDOAImpl;
+import dev.conner.doas.ComplaintDAO;
+import dev.conner.doas.ComplaintDAOImpl;
+import dev.conner.doas.MeetingDAO;
+import dev.conner.doas.MeetingDAOImpl;
 import dev.conner.services.ComplaintService;
 import dev.conner.services.ComplaintServiceImpl;
 import dev.conner.services.MeetingService;
@@ -20,11 +20,11 @@ public class App {
             config.enableCorsForAllOrigins();
         });
 
-        ComplaintDOA cD = new ComplaintDOAImpl();
+        ComplaintDAO cD = new ComplaintDAOImpl();
         ComplaintService cS = new ComplaintServiceImpl(cD);
         ComplaintController cC = new ComplaintController(cS);
 
-        MeetingDOA mD = new MeetingDOAImpl();
+        MeetingDAO mD = new MeetingDAOImpl();
         MeetingService mS = new MeetingServiceImpl(mD);
         MeetingController mC = new MeetingController(mS);
 

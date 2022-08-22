@@ -7,7 +7,7 @@ import java.sql.*;
 import java.util.HashSet;
 import java.util.Set;
 
-public class ComplaintDOAImpl implements ComplaintDOA{
+public class ComplaintDAOImpl implements ComplaintDAO {
     @Override
     public Complaint createComplaint(Complaint complaint) {
         try(Connection conn = ConnectionUtil.createConnection()){

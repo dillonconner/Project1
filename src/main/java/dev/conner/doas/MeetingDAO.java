@@ -4,7 +4,7 @@ import dev.conner.entities.Meeting;
 
 import java.util.Set;
 
-public interface MeetingDOA {
+public interface MeetingDAO {
 
     Meeting createMeeting(Meeting meeting);
 

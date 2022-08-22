@@ -1,8 +1,7 @@
 package dev.conner.doa;
 
-import dev.conner.doas.MeetingDOA;
-import dev.conner.doas.MeetingDOAImpl;
-import dev.conner.entities.Complaint;
+import dev.conner.doas.MeetingDAO;
+import dev.conner.doas.MeetingDAOImpl;
 import dev.conner.entities.Meeting;
 import dev.conner.utils.ConnectionUtil;
 import org.junit.jupiter.api.*;
@@ -15,7 +14,7 @@ import java.util.Set;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class MeetingDoaTests {
 
-    static MeetingDOA meetingDOA = new MeetingDOAImpl();
+    static MeetingDAO meetingDAO = new MeetingDAOImpl();
 
     @BeforeAll
     static void setup(){
@@ -39,7 +38,7 @@ public class MeetingDoaTests {
     @Order(1)
     void create_meeting_test(){
         Meeting m = new Meeting(0, 1661120387, "meeting Place");
-        Meeting savedM = meetingDOA.createMeeting(m);
+        Meeting savedM = meetingDAO.createMeeting(m);
         Assertions.assertNotEquals(0, savedM.getId());
     }
 
@@ -47,7 +46,7 @@ public class MeetingDoaTests {
     @Order(2)
     void update_meeting_test(){
         Meeting m = new Meeting(1, 1661120387, "different Place");
-        Meeting savedM = meetingDOA.updateMeeting(m);
+        Meeting savedM = meetingDAO.updateMeeting(m);
         Assertions.assertEquals("different Place", savedM.getAddress());
     }
 
@@ -55,9 +54,9 @@ public class MeetingDoaTests {
     @Order(3)
     void get_all_meetings_test(){
         Meeting m = new Meeting(0, 1661120387, "A Place");
-        m = meetingDOA.createMeeting(m);
-        m = meetingDOA.createMeeting(m);
-        Set<Meeting> meetingSet = meetingDOA.getAllMeetings();
+        m = meetingDAO.createMeeting(m);
+        m = meetingDAO.createMeeting(m);
+        Set<Meeting> meetingSet = meetingDAO.getAllMeetings();
         Assertions.assertEquals(3,meetingSet.size());
     }
 

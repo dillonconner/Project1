@@ -1,28 +1,28 @@
 package dev.conner.services;
 
-import dev.conner.doas.MeetingDOA;
+import dev.conner.doas.MeetingDAO;
 import dev.conner.entities.Meeting;
 
 import java.util.Set;
 
 public class MeetingServiceImpl implements MeetingService{
 
-    private MeetingDOA meetingDOA;
+    private MeetingDAO meetingDAO;
 
-    public MeetingServiceImpl(MeetingDOA meetingDOA){this.meetingDOA = meetingDOA;}
+    public MeetingServiceImpl(MeetingDAO meetingDAO){this.meetingDAO = meetingDAO;}
 
     @Override
     public Meeting createMeeting(Meeting meeting) {
-        return this.meetingDOA.createMeeting(meeting);
+        return this.meetingDAO.createMeeting(meeting);
     }
 
     @Override
     public Set<Meeting> getAllMeetings() {
-        return this.meetingDOA.getAllMeetings();
+        return this.meetingDAO.getAllMeetings();
     }
 
     @Override
     public Meeting updateMeeting(Meeting meeting) {
-        return this.meetingDOA.updateMeeting(meeting);
+        return this.meetingDAO.updateMeeting(meeting);
     }
 }
