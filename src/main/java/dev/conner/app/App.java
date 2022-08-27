@@ -1,15 +1,13 @@
 package dev.conner.app;
 
+import com.google.gson.Gson;
 import dev.conner.controllers.ComplaintController;
 import dev.conner.controllers.MeetingController;
-import dev.conner.doas.ComplaintDAO;
-import dev.conner.doas.ComplaintDAOImpl;
-import dev.conner.doas.MeetingDAO;
-import dev.conner.doas.MeetingDAOImpl;
-import dev.conner.services.ComplaintService;
-import dev.conner.services.ComplaintServiceImpl;
-import dev.conner.services.MeetingService;
-import dev.conner.services.MeetingServiceImpl;
+import dev.conner.controllers.UserController;
+import dev.conner.doas.*;
+import dev.conner.dtos.LoginCredentials;
+import dev.conner.entities.User;
+import dev.conner.services.*;
 import io.javalin.Javalin;
 
 public class App {
@@ -28,6 +26,12 @@ public class App {
         MeetingService mS = new MeetingServiceImpl(mD);
         MeetingController mC = new MeetingController(mS);
 
+        UserDAO uD = new UserDAOImpl();
+        UserService uS = new UserServiceImpl(uD);
+        UserController uC = new UserController(uS);
+
+        LoginService loginService = new LoginServiceImpl(uD);
+
         /////////////////          COMPLAINTS       ////////////////////////////
         app.post("/complaints", cC.createComplaint);
         //set priority for complaints
@@ -39,10 +43,8 @@ public class App {
         app.patch("/complaints/{complaintId}/setMeeting/{meetingId}", cC.setMeeting);
 
         app.get("/complaints/{complaintId}", cC.getComplaintById);
-        //get all complaints sorted
+        //get all complaints sorted or by query of priority/meetingId
         app.get("/complaints", cC.getAllComplaints);
-        //get all complaints by query
-        app.get("/complaints/{priority}", cC.getAllComplaintsByPriority);
 
         /////////////////          MEETINGS       ////////////////////////////
         app.post("/meetings", mC.createMeeting);
@@ -50,9 +52,21 @@ public class App {
         app.put("/meetings/{meetingId}", mC.updateMeeting);
 
         /////////////////          USERS       ////////////////////////////
+        app.post("/users", uC.createUser);
+        app.post("/login", ctx ->{
+            String body = ctx.body();
+            Gson gson = new Gson();
+            LoginCredentials credentials = gson.fromJson(body, LoginCredentials.class);
 
-
-
+            try{
+                User user = loginService.validateUser(credentials.getUsername(), credentials.getPassword());
+                String employeeJSON = gson.toJson(user);
+                ctx.result(employeeJSON);
+            }catch(RuntimeException e){
+                ctx.status(400);
+                ctx.result(e.getMessage());
+            }
+        });
         app.start();
     }
 }

@@ -102,19 +102,27 @@ public class ComplaintController {
     };
 
     public Handler getAllComplaints = (ctx) -> {
-        Set<Complaint> complaints = this.complaintService.getAllComplaints();
+        String priority = ctx.queryParam("priority");
+        String meeting = ctx.queryParam("meetingId");
+        String typeParam = ctx.queryParam("cType");
+
+        Complaint.ComplaintType type = null;
+        if(typeParam != null) type = Complaint.ComplaintType.valueOf(typeParam);
+
+        Set<Complaint> complaints;
+        if (priority != null) {
+            Complaint.ComplaintPriority p = Complaint.ComplaintPriority.valueOf(priority);
+            complaints = this.complaintService.getAllComplaintsByPriority(p, type);
+
+        } else if (meeting != null) {
+            int meetingId = Integer.parseInt(meeting);
+            complaints = this.complaintService.getAllComplaintsByMeeting(meetingId, type);
+
+        } else {
+            complaints = this.complaintService.getAllComplaints(type);
+        }
         String json = this.gson.toJson(complaints);
         ctx.status(200);
         ctx.result(json);
     };
-
-    public Handler getAllComplaintsByPriority = (ctx) -> {
-        Complaint.ComplaintPriority priority = Complaint.ComplaintPriority.valueOf(ctx.pathParam("priority"));
-        Set<Complaint> complaints = this.complaintService.getAllComplaintsByPriority(priority);
-        String json = this.gson.toJson(complaints);
-        ctx.status(200);
-        ctx.result(json);
-    };
-
-
 }

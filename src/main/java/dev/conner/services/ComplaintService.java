@@ -14,7 +14,9 @@ public interface ComplaintService {
 
     Complaint getComplaintById(int id);
 
-    Set<Complaint> getAllComplaints();
+    Set<Complaint> getAllComplaints(Complaint.ComplaintType cType);
 
-    Set<Complaint> getAllComplaintsByPriority(Complaint.ComplaintPriority priority);
+    Set<Complaint> getAllComplaintsByPriority(Complaint.ComplaintPriority priority, Complaint.ComplaintType cType);
+
+    Set<Complaint> getAllComplaintsByMeeting(int meetingId, Complaint.ComplaintType cType);
 }

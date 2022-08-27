@@ -98,10 +98,17 @@ public class ComplaintDAOImpl implements ComplaintDAO {
     }
 
     @Override
-    public Set<Complaint> getAllComplaints() {
+    public Set<Complaint> getAllComplaints(Complaint.ComplaintType cType) {
         try(Connection conn = ConnectionUtil.createConnection()){
-            String sql = "select * from complaint order by priority";
-            PreparedStatement ps = conn.prepareStatement(sql);
+            PreparedStatement ps;
+            if(cType != null){
+                String sql = "select * from complaint where complaint_type = ? order by priority";
+                ps = conn.prepareStatement(sql);
+                ps.setString(1, cType.toString());
+            }else{
+                String sql = "select * from complaint order by priority";
+                ps = conn.prepareStatement(sql);
+            }
 
             ResultSet rs = ps.executeQuery();
 
@@ -126,11 +133,48 @@ public class ComplaintDAOImpl implements ComplaintDAO {
     }
 
     @Override
-    public Set<Complaint> getAllComplaintsByPriority(Complaint.ComplaintPriority priority) {
+    public Set<Complaint> getAllComplaintsByPriority(Complaint.ComplaintPriority priority, Complaint.ComplaintType cType) {
         try(Connection conn = ConnectionUtil.createConnection()){
-            String sql = "select * from complaint where priority = ?";
+            PreparedStatement ps;
+            if(cType != null){
+                String sql = "select * from complaint where priority = ? and complaint_type = ?";
+                ps = conn.prepareStatement(sql);
+                ps.setString(1, priority.toString());
+                ps.setString(2, cType.toString());
+            }else {
+                String sql = "select * from complaint where priority = ?";
+                ps = conn.prepareStatement(sql);
+                ps.setString(1, priority.toString());
+            }
+
+            ResultSet rs = ps.executeQuery();
+
+            Set<Complaint> complaints = new HashSet<>();
+            while(rs.next()){
+                Complaint c = new Complaint();
+                c.setId(rs.getInt("id"));
+                c.setcType(Complaint.ComplaintType.valueOf(rs.getString("complaint_type")));
+                c.setDescription(rs.getString("description"));
+                c.setcPriority(Complaint.ComplaintPriority.valueOf(rs.getString("priority")));
+                c.setDate(rs.getLong("report_date"));
+                c.setMeetingId(rs.getInt("meetingId"));
+
+                complaints.add(c);
+            }
+            return complaints;
+
+        }catch(SQLException e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public Set<Complaint> getAllComplaintsByMeeting(int meetingId, Complaint.ComplaintType cType) {
+        try(Connection conn = ConnectionUtil.createConnection()){
+            String sql = "select * from complaint where meetingId = ? order by priority";
             PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setString(1,priority.toString());
+            ps.setInt(1,meetingId);
 
             ResultSet rs = ps.executeQuery();
 

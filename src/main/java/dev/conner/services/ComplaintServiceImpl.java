@@ -38,12 +38,17 @@ public class ComplaintServiceImpl implements ComplaintService{
     }
 
     @Override
-    public Set<Complaint> getAllComplaints() {
-        return this.complaintDAO.getAllComplaints();
+    public Set<Complaint> getAllComplaints(Complaint.ComplaintType cType) {
+        return this.complaintDAO.getAllComplaints(cType);
     }
 
     @Override
-    public Set<Complaint> getAllComplaintsByPriority(Complaint.ComplaintPriority priority) {
-        return this.complaintDAO.getAllComplaintsByPriority(priority);
+    public Set<Complaint> getAllComplaintsByPriority(Complaint.ComplaintPriority priority, Complaint.ComplaintType cType) {
+        return this.complaintDAO.getAllComplaintsByPriority(priority, cType);
+    }
+
+    @Override
+    public Set<Complaint> getAllComplaintsByMeeting(int meetingId, Complaint.ComplaintType cType) {
+        return this.complaintDAO.getAllComplaintsByMeeting(meetingId, cType);
     }
 }

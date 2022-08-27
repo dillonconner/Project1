@@ -2,11 +2,12 @@ package dev.conner.entities;
 
 public class User {
 
-    enum UserType {CONSTITUENT, COUNCIL}
+    public enum UserType {CONSTITUENT, COUNCIL}
 
     private int id;
     private String username;
     private UserType userType;
+    private String password;
 
     public User() {
     }
@@ -39,6 +40,14 @@ public class User {
 
     public void setUserType(UserType userType) {
         this.userType = userType;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     @Override
