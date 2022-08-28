@@ -19,7 +19,7 @@ permissions:
   contents: read
   
 env:
-  AZURE_SQL_DB: jdbc:postgresql://conner-sql-server.postgres.database.azure.com:5432/postgres?user=dillonconner&password=Rhodes23$&ssl=false
+  AZURE_SQL_DB: ${{AZURE_SQL_DB}}
 
 jobs:
   build:
