@@ -18,8 +18,7 @@ on:
 permissions:
   contents: read
   
-env:
-  AZURE_SQL_DB: ${{ secrets.AZURE_CONNECTION_SECRET}}
+
 
 jobs:
   build:
@@ -28,6 +27,8 @@ jobs:
 
     steps:
     - name: Check API key
+      env:
+        AZURE_SQL_DB: ${{ secrets.AZURE_CONNECTION_SECRET}}
       run: echo "$AZURE_SQL_DB"
     - uses: actions/checkout@v3
     - name: Set up JDK 11
@@ -36,6 +37,8 @@ jobs:
         java-version: '11'
         distribution: 'temurin'
     - name: Build with Gradle
+      env:
+        AZURE_SQL_DB: ${{ secrets.AZURE_CONNECTION_SECRET}}
       uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
       with:
         arguments: build
