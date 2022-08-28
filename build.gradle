@@ -31,7 +31,7 @@ task customFatJar(type: Jar) {
     manifest {
         attributes 'Main-Class': 'dev.conner.app.App'
     }
-    baseName = 'town-complaint-App'
+    baseName = 'Project1-App'
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
     with jar
