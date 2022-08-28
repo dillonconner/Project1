@@ -19,7 +19,7 @@ permissions:
   contents: read
   
 env:
-  AZURE_SQL_DB: ${{AZURE_SQL_DB}}
+  AZURE_SQL_DB: ${{AZURE_CONNECTION_SECRET}}
 
 jobs:
   build:
